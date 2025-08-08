@@ -12,18 +12,26 @@ from dotenv import load_dotenv
 from . import models, schema
 from .database import SessionLocal, engine
 from .routers import post, user, auth, vote
- 
+import traceback
 # models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
 ## auto alembic migration
 def run_migrations():
-    env_file = ".env.production" if os.getenv("RENDER") == "TRUE" else ".env.dev"
-    load_dotenv(env_file)
+    try:
+        print("🔁 Starting alembic migration...")
 
-    alembic_cfg = Config(os.path.join(os.path.dirname(__file__), "../alembic.ini"))
-    command.upgrade(alembic_cfg, "head")
+        env_file = ".env.production" if os.getenv("RENDER") == "TRUE" else ".env.dev"
+        load_dotenv(env_file)
+
+        alembic_cfg = Config(os.path.join(os.path.dirname(__file__), "../alembic.ini"))
+        command.upgrade(alembic_cfg, "head")
+
+        print("✅ Alembic migration completed.")
+    except Exception as e:
+        print("❌ Alembic migration failed!")
+        traceback.print_exc()
 
 @app.on_event("startup")
 def startup_event():

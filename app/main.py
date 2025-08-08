@@ -4,6 +4,11 @@ from fastapi.middleware.cors import CORSMiddleware
 # from pydantic import BaseModel
 # from random import randrange
 
+from alembic import command
+from alembic.config import Config
+import os
+from dotenv import load_dotenv
+
 from . import models, schema
 from .database import SessionLocal, engine
 from .routers import post, user, auth, vote
@@ -11,6 +16,19 @@ from .routers import post, user, auth, vote
 # models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+## auto alembic migration
+def run_migrations():
+    env_file = ".env.production" if os.getenv("RENDER") == "TRUE" else ".env.dev"
+    load_dotenv(env_file)
+
+    alembic_cfg = Config(os.path.join(os.path.dirname(__file__), "../alembic.ini"))
+    command.upgrade(alembic_cfg, "head")
+
+@app.on_event("startup")
+def startup_event():
+    run_migrations()
+## end auto alembic migration
 
 origins = ["*"]
 

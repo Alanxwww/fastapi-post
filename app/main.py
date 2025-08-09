@@ -33,9 +33,9 @@ def run_migrations():
         print("❌ Alembic migration failed!")
         traceback.print_exc()
 
-@app.on_event("startup")
-def startup_event():
-    run_migrations()
+# @app.on_event("startup")
+# def startup_event():
+#     run_migrations()
 ## end auto alembic migration
 
 origins = ["*"]

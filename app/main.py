@@ -17,21 +17,21 @@ import traceback
 
 app = FastAPI()
 
-## auto alembic migration
-def run_migrations():
-    try:
-        print("🔁 Starting alembic migration...")
+# ## auto alembic migration
+# def run_migrations():
+#     try:
+#         print("🔁 Starting alembic migration...")
 
-        env_file = ".env.production" if os.getenv("RENDER") == "TRUE" else ".env.dev"
-        load_dotenv(env_file)
+#         env_file = ".env.production" if os.getenv("RENDER") == "TRUE" else ".env.dev"
+#         load_dotenv(env_file)
 
-        alembic_cfg = Config(os.path.join(os.path.dirname(__file__), "../alembic.ini"))
-        command.upgrade(alembic_cfg, "head")
+#         alembic_cfg = Config(os.path.join(os.path.dirname(__file__), "../alembic.ini"))
+#         command.upgrade(alembic_cfg, "head")
 
-        print("✅ Alembic migration completed.")
-    except Exception as e:
-        print("❌ Alembic migration failed!")
-        traceback.print_exc()
+#         print("✅ Alembic migration completed.")
+#     except Exception as e:
+#         print("❌ Alembic migration failed!")
+#         traceback.print_exc()
 
 # @app.on_event("startup")
 # def startup_event():

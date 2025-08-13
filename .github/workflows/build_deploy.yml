@@ -77,9 +77,24 @@ jobs:
       #   run: echo ${{steps.docker_build.outputs.digest}}
 
   deploy:
+    environment:
+      name: production
+    env:
+      PROD_HOST: ${{secrets.PROD_HOST}}
+      PROD_USERNAME: ${{secrets.PROD_USERNAME}}
+      PROD_PASSWORD: ${{secrets.PROD_PASSWORD}}
+
+    
     runs-on: ubuntu-latest
     needs: [build]
-
     steps:
-      - name: deploying stuff
-        run: echo "going to deploy some staff"
+      - name: deploying to ubuntu server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.PROD_HOST}}
+          username: ${{secrets.PROD_USERNAME}}
+          password: ${{secrets.PROD_PASSWORD}}
+          script: |
+            cd app/scr
+            git pull
+            sudo systemctl restart api

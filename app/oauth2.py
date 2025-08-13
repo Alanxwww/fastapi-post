@@ -8,7 +8,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from .config import settings
 # OAuth2PasswordBearer is a class that provides a way to extract the token from the request
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
 SECRET_KEY = settings.secret_key
 ALGORITHM = settings.algorithm

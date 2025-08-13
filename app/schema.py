@@ -1,7 +1,7 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from datetime import datetime
 from typing import Optional
-from pydantic.types import conint
+from pydantic import conint
 
 # User response model 
 class UserOut(BaseModel):
@@ -9,8 +9,9 @@ class UserOut(BaseModel):
     email: EmailStr
     created_at: datetime
 
-    class Config: # Pydantic: get data from database
-        from_attribute = True
+    model_config = ConfigDict(from_attributes=True)
+    # class Config: # Pydantic: get data from database
+    #     from_attribute = True
 
 class PostBase(BaseModel):
     title: str
@@ -26,17 +27,19 @@ class Post(PostBase): # inherits from PostBase
     created_at: datetime
     owner_id: int
     owner: UserOut  # type hint for relationship with User model
-
-    class Config:
-        from_attribute = True
+    
+    model_config = ConfigDict(from_attributes=True)
+    # class Config:
+    #     from_attribute = True
 
 ## response model
 class PostOut(BaseModel):
     post: Post
     votes: int
     
-    class Config:
-        from_attribute = True
+    model_config = ConfigDict(from_attributes=True)
+    # class Config:
+    #     from_attribute = True
 
 # User schema
 class UserCreate(BaseModel):

@@ -97,4 +97,4 @@ jobs:
           script: |
             cd app/scr
             git pull
-            echo password | sudo -S systemctl restart api
+            echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api

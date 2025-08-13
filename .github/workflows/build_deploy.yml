@@ -44,8 +44,8 @@ jobs:
       - name: install all dependencies
         run: pip install -r requirements.txt
       
-      - name: Run migrations
-        run: alembic upgrade head
+      # - name: Run migrations
+      #   run: alembic upgrade head
 
       - name: test with pytest
         run: |

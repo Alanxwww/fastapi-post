@@ -97,4 +97,4 @@ jobs:
           script: |
             cd app/scr
             git pull
-            sudo systemctl restart api
+            echo password | sudo -S systemctl restart api

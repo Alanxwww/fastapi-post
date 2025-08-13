@@ -8,12 +8,12 @@ jobs:
     steps:
       - name: pulling git repo
         uses: actions/checkout@v5
-      - name: Intall python version 3.9
+      - name: Intall python version 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.11'
       - name: update pip
-        run: python -m pip install --update pip
+        run: python -m pip install --upgrade pip
       - name: install all dependencies
         run: pip install -r requirement.txt
 
